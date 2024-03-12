@@ -19,7 +19,7 @@ def _get_map_html(latlng: str, zoom: int, width_percent: int) -> str:
 </iframe>"""
 
 
-def write_html(listings_with_commutes: list[types.ListingStage3]):
+def write_html(listings: list[types.ListingStage3]):
     html = """
     <!DOCTYPE html>
     <html>
@@ -72,7 +72,7 @@ def write_html(listings_with_commutes: list[types.ListingStage3]):
     </head>
     <body>
     """
-    for listing_with_commute in listings_with_commutes:
+    for listing_with_commute in listings:
         html += "<section>\n"
         html += (
             "<h1>"
