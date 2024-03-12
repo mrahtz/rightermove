@@ -25,6 +25,7 @@ parser.add_argument("--discard_agents", type=str, default="")
 parser.add_argument("--min_tenancy_months", type=int, default=None)
 parser.add_argument("--use_raw_data_cache", action=argparse.BooleanOptionalAction)
 parser.add_argument("--home_address", type=str, required=True)
+parser.add_argument("--max_days_since_added", type=int)
 args = parser.parse_args()
 
 
@@ -270,6 +271,8 @@ def main():
             ],
         }
     )
+    if args.max_days_since_added is not None:
+        search_params["maxDaysSinceAdded"] = args.max_days_since_added
     if args.rent_or_buy == "short_term_rent":
         search_params["letType"] = "shortTerm"
     elif args.rent_or_buy == "long_term_rent":
