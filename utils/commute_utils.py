@@ -54,12 +54,12 @@ def _load_cache(listings: list[types.ListingStage1]) -> list[types.ListingStage2
 def _compute_commute_by_mode(
     latlngs: list[str],
     mode: Literal["bicycling", "transit"],
-    home_address: str,
+    work_address: str,
 ) -> list[types.Commute]:
     client = googlemaps.Client(key=os.environ["GOOGLE_MAPS_API_KEY"])
     response = distance_matrix.distance_matrix(
         client,
-        [home_address],
+        [work_address],
         latlngs,
         mode=mode,
     )
@@ -79,7 +79,7 @@ def _compute_commute_by_mode(
 
 def add_commutes(
     listings: list[types.ListingStage1],
-    home_address: str,
+    work_address: str,
 ) -> list[types.ListingStage2]:
     listings_with_commutes = _load_cache(listings)
     print(f"Loaded commutes for {len(listings_with_commutes)} listings from cache")
@@ -90,9 +90,9 @@ def add_commutes(
     for listings_chunk in itertools.batched(uncached_listings, n=25):
         latlngs = [t.latlng for t in listings_chunk]
         bicycling_commutes = _compute_commute_by_mode(
-            latlngs, "bicycling", home_address
+            latlngs, "bicycling", work_address
         )
-        transit_commutes = _compute_commute_by_mode(latlngs, "transit", home_address)
+        transit_commutes = _compute_commute_by_mode(latlngs, "transit", work_address)
         for listing, bicycling, transit in zip(
             listings_chunk,
             bicycling_commutes,

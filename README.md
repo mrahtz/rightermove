@@ -11,7 +11,7 @@ $ GOOGLE_MAPS_API_KEY=YOUR_API_KEY_HERE ./main.py \
     --max_price=3000 \
     --min_tenancy_months=6 \
     --use_raw_data_cache \
-    --home_address="10 Downing Street" \
+    --work_address="10 Downing Street" \
 ```
 
 Spits out a static HTML page `output.html`.

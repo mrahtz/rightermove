@@ -24,7 +24,7 @@ parser.add_argument("--sort_order", choices=["asc", "desc"], default="asc")
 parser.add_argument("--discard_agents", type=str, default="")
 parser.add_argument("--min_tenancy_months", type=int, default=None)
 parser.add_argument("--use_raw_data_cache", action=argparse.BooleanOptionalAction)
-parser.add_argument("--home_address", type=str, required=True)
+parser.add_argument("--work_address", type=str, required=True)
 parser.add_argument("--max_days_since_added", type=int)
 args = parser.parse_args()
 
@@ -315,7 +315,7 @@ def main():
         print(f"{len(listings)} left after filtering by agents\n")
 
     # Filter listings based on --min_commute_mins and --max_commute_mins.
-    listings = commute_utils.add_commutes(listings, args.home_address)
+    listings = commute_utils.add_commutes(listings, args.work_address)
     listings = commute_utils.filter_commutes(
         listings,
         min_commute_mins=args.min_commute_mins,
