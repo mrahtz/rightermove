@@ -23,7 +23,11 @@ parser.add_argument("--discard_agents", type=str, default="")
 parser.add_argument("--min_tenancy_months", type=int, default=None)
 parser.add_argument("--use_raw_data_cache", action=argparse.BooleanOptionalAction)
 parser.add_argument("--work_address", type=str, required=True)
-parser.add_argument("--max_days_since_added", type=int)
+parser.add_argument(
+    "--max_days_since_added_or_reduced",
+    type=int,
+    choices=[1, 3, 7, 14],
+)
 args = parser.parse_args()
 
 
@@ -167,8 +171,12 @@ def main():
             ],
         }
     )
-    if args.max_days_since_added is not None:
-        search_params["maxDaysSinceAdded"] = args.max_days_since_added
+    if args.max_days_since_added_or_reduced is not None:
+        # Annoyingly, this field can't be used to specify filtering by added/reduced independently.
+        # We could filter manually based on the response field 'firstVisibleDate', but it doesn't always seem to line up
+        # with the response field 'addedOrReduced' - sometimes it's earlier, sometimes later. I assume addedOrReduced
+        # is more likely to be correct?
+        search_params["maxDaysSinceAdded"] = args.max_days_since_added_or_reduced
     if args.rent_or_buy == "short_term_rent":
         search_params["letType"] = "shortTerm"
     elif args.rent_or_buy == "long_term_rent":

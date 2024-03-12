@@ -53,7 +53,7 @@ class ListingStage1:
     title: str
     image_urls: list[str]
     price_str: str
-    added_or_reduced: str
+    added_or_reduced: str  # E.g. "Added today", "Added on 07/03/2024", "Reduced today", "Reduced on 29/02/2024".
     tenancy_minimum_months: int | None  # None = 'not specified'
     latlng: str
     agent: str
