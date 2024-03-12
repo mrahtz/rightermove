@@ -105,7 +105,7 @@ def _parallel_fetch(
             key_by_future[future] = key
         for future in tqdm.tqdm(
             concurrent.futures.as_completed(key_by_future),
-            unit="URLs",
+            unit="listing",
             total=len(key_by_future),
         ):
             key = key_by_future[future]

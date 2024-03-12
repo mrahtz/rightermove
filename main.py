@@ -203,7 +203,7 @@ def main():
             if listing.tenancy_minimum_months
             and listing.tenancy_minimum_months <= args.min_tenancy_months
         ]
-        print(f"{len(listings)} left after filtering by minimum tenancy\n")
+        print(f"{len(listings)} listings left after filtering by minimum tenancy\n")
 
     # Filter listings based on estate agents.
     if args.discard_agents:
@@ -216,7 +216,7 @@ def main():
                 for agent_substring in discard_agents
             )
         ]
-        print(f"{len(listings)} left after filtering by agents\n")
+        print(f"{len(listings)} listing left after filtering by agents\n")
 
     # Filter listings based on --min_commute_mins and --max_commute_mins.
     listings = commute_utils.add_commutes(listings, args.work_address)
@@ -225,6 +225,7 @@ def main():
         min_commute_mins=args.min_commute_mins,
         max_commute_mins=args.max_commute_mins,
     )
+    print(f"{len(listings)} listings left after filtering by commute time\n")
 
     print(f"Found {len(listings)} listings matching requirements\n")
 
